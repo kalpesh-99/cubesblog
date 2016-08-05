@@ -38,14 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # thrid party 
-    # 'markdown_deux',
+    'crispy_forms', #atb 9.1
+    'markdown_deux', # atb 6.1
     'pagedown',
+    'rest_framework', # api 4.1
 
 
     # local apps
     'blog',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3' # atb 9.1
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -138,6 +141,24 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    # 'DEFAULT_PARSER_CLASSES': (
+    #     'rest_framework.parsers.JSONParser',
+    # )
+
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.SessionAuthentication',
+    #     ),
+
+    # # 'DEFAULT_PERMISSION_CLASSES': (  
+    # #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    # #     )
+}
 
 
 
