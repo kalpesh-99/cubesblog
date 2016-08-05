@@ -16,6 +16,8 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" >
+
 <link rel='stylesheet' href='{% static "css/base.css" %}' />
 
 <style>
@@ -38,9 +40,49 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
+<script>
+
+/**
+ *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+ *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+/*
+var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//cubesblog-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+	
+
+
+
+
+
 {% include "messages_display.html" %}
+
+
 <div class='container'>
+	<ol class='breadcrumb'> <!-- atb 27 -->
+		<li><a href='{% url "blog:list" %}'>Home</a></li>
+		{% block post_detail_link %}
+		{% endblock %}
+	</ol>
+
+	
+		<div class='col-xs-6 col-md-4'>
+			<a href="http://cubesapp.com" class="btn btn-default btn-lg">Sale <span class="glyphicon glyphicon-tags"></span></a>
+		</div>
+		
+	
 {% block content %}
+
+
 
 {% endblock content %}
 </div>
@@ -64,13 +106,53 @@ $(document).ready(function(){
 		$(this).html(markedContent)
 
 	})
-	$(".content-markdown img").each(function(){
+	$(".post-detail-item img").each(function(){
 			$(this).addClass("img-responsive");
 
 	})
 
+	// cfe atb 8.2, 8.3, 8.4 
 
+
+	var contentInput = $("#id_content");
+
+	function setContent(value){
+		var markedContent = marked(value)
+		$("#preview-content").html(markedContent)
+		$("#preview-content img").each(function(){
+			$(this).addClass("img-responsive")
+		})
+	}
+	setContent(contentInput.val())
+
+	contentInput.keyup(function(){
+		var newContent = $(this).val()
+		setContent(newContent)
+	})
 	
+
+
+
+	var titleInput = $("#id_title");
+
+	function setTitle(value) {
+		$("#preview-title").text(value)
+	}
+
+	setTitle(titleInput.val())
+
+	titleInput.keyup(function(){
+		var newContent = $(this).val()
+		setTitle(newContent)
+	})
+
+
+
+	// preview-title cfe atb 8.3
+	// preview-content
+	// var titleInput = $("#id_title");
+	// $("#preview-title").text(titleInput.val())
+
 
 		
 	
