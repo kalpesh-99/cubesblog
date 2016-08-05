@@ -9,6 +9,8 @@ from django.utils import timezone
 
 from .forms import PostForm
 from .models import Post
+
+
 # from .models import Category
 
 # Create your views here.
@@ -42,6 +44,8 @@ def post_detail(request, slug=None): #retrieve from crud model
 		if not request.user.is_staff or not request.user.is_superuser:
 			raise Http404
 	share_string = quote_plus(instance.content)
+
+
 	context = {
 			"title": instance.title,
 			"instance": instance,
@@ -67,7 +71,7 @@ def post_list(request): #list items
 				Q(user__last_name__icontains=query)
 				).distinct()
 	
-	paginator = Paginator(queryset_list, 5) # Show 25 contacts per page
+	paginator = Paginator(queryset_list, 3) # Show 25 contacts per page
 	page_request_var = "page"
 	page = request.GET.get(page_request_var)
 	try:
@@ -82,7 +86,7 @@ def post_list(request): #list items
 
 	context = {
 		"object_list": queryset, 
-		"title": "List",
+		"title": "My.Blog",
 		"page_request_var": page_request_var,
 		"today": today,
 }

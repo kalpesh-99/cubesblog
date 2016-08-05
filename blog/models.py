@@ -6,9 +6,11 @@ from django.db import models
 from django.db.models import permalink
 from django.db.models.signals import pre_save
 from django.utils import timezone
-# from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe #6.4
 from django.utils.text import slugify
-# from markdown_deux import markdown
+from markdown_deux import markdown #6.2
+
+from .utils import get_read_time # atb 20
 
 # import tagging
 # from tagging.fields import TagField
@@ -55,6 +57,7 @@ class Post(models.Model):
 	content = models.TextField()
 	draft = models.BooleanField(default=False)
 	publish = models.DateField(auto_now=False, auto_now_add=False)
+	read_time = models.IntegerField(default=0) # atb 20 assume minutes
 	created_date = models.DateTimeField(auto_now_add=True, auto_now=False)
 	updated_date = models.DateTimeField(auto_now_add=False, auto_now=True)
 	# author = models.CharField(max_length = 50)
@@ -72,10 +75,10 @@ class Post(models.Model):
 	class Meta:
 		ordering = ["-created_date", "-updated_date"]
 
-	# def get_markdown(self):
-	#	content = self.content
-	#	markdown_text = markdown(content)
-	#	return mark_safe(markdown_text)
+	def get_markdown(self): # 6.3
+		content = self.content
+		markdown_text = markdown(content)
+		return mark_safe(markdown_text)
 
 
 
@@ -96,6 +99,12 @@ def create_slug(instance, new_slug=None):
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = create_slug(instance)
+
+	if instance.content:
+		html_string = instance.get_markdown()
+		read_time_var = get_read_time(html_string)
+		instance.read_time = read_time_var
+
 
 
 pre_save.connect(pre_save_post_receiver, sender=Post)

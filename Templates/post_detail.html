@@ -4,9 +4,6 @@
 <title> {% block head_title %} {{ instance.title }} | {{ block.super }} {% endblock head_title %}
 </title>
 
-{% block post_detail_link %}
-	<li><a href='{{ instance.get_absolute_url }}'>{{ instance.title }}</a></li>
-{% endblock %}
 
 
 
@@ -16,10 +13,6 @@
 		<img src='{{ instance.image.url }}' class ='img-responsive' />
 	{% endif %}
 	<h1>{{ title }}<small>{% if instance.draft %} <span style='color:red;'>Draft</span>{% endif %} {{instance.publish}}</small></h1> 
-	<p>Read time: {% if instance.read_time <= 1 %} < 1 minute 
- 		{% else %} {{ instance.read_time }} minutes 
-		{% endif %} </p>
-
 	{% if instance.user.get_full_name %}
 		<p>Author: {{ instance.user.get_full_name }}</p>
 	{% endif %}
@@ -53,23 +46,11 @@ Linkedin
 <div class="row">
 <div class="col-sm-12">
 
-	<div class='post-detail-item'>{{ instance.get_markdown }}</div>
+	<div class='content-markdown'>{{ instance.content }}</div>
 
 <hr/>
 <br/>
 	<div class="fb-comments" data-href="{{ request.build_absolute_url }}" data-numposts="5"></div>
-
-<!-- adding disqus -->
-<hr/>
-<br/>
-
-<div id="disqus_thread">
-</div>
-
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-
 
 </div>
 </div>

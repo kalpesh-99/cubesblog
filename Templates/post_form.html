@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %} <!-- atb 9.2 -->
+
 
 {% block head_extra %} 
 {{ form.media }}
@@ -8,21 +8,13 @@
 
 
 {% block content %}
-<div class='col-sm-6'>
-	<h1>Preview</h1>
-<hr/>
-<div class='content-preview'> <!-- cfe atb 8.2, 8.3 -->
-	<h3 id='preview-title'></h3>
-	<p id='preview-content'></p>
+<div class='col-sm-6 col-sm-offset-3'>
 
-</div>
-</div>	
 
-<div class='col-sm-6'>
 <h1>Form</h1> 
-<hr/>
+
 <form method='POST' action='' enctype="multipart/form-data">{% csrf_token %}
-{{ form|crispy }}
+{{ form.as_p }}
 <input type='submit' class='btn btn-default' value="Create Post" /> 
 </form>
 </div>
