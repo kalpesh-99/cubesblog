@@ -19,9 +19,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 urlpatterns = [
+    # url(r'^$', views.home, name='home')
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include("blog.urls", namespace='blog')),
-
+    # url(r'^blog/templates/', include("blog.templates.urls", namespace='krhome')),
     url(r'^api/blog/', include("blog.api.urls", namespace='blog-api')),
 ]
 
